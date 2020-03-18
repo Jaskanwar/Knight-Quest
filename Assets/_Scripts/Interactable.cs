@@ -6,30 +6,36 @@ public class Interactable : MonoBehaviour
 {
     public float radius = 3f;
 
-    bool isFocus = false;
+    bool isFocus = false; // is this specific interactable currently being focus on
 
-    bool hasInteracted = false;
+    bool hasInteracted = false; // have we already interacted with the object
 
-    Transform player;
+    Transform player; // refernce to the player object.
 
     public Transform interactionTransform;
 
 
+    // this method is meant to be overriden for various objects that the player needs to interact with.
     public virtual void Interact()
     {
         
 
     }
 
+    // draws the wire frame to see the interactable area around the object.
     void OnDrawGizmosSelected()
     {
+        if(interactionTransform ==null)
+        {
+            interactionTransform = transform;
+        }
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(interactionTransform.position, radius);
     }
 
     void Update()
     {
-        if (isFocus && !hasInteracted)
+        if (isFocus && !hasInteracted) 
         {
             float distance = Vector3.Distance(player.position, interactionTransform.position);
             if (distance <= radius)
@@ -40,6 +46,7 @@ public class Interactable : MonoBehaviour
         }
     }
 
+    // Sets the appropriate fields when the object needs to be focus on.
     public void OnFocused(Transform playerTransform)
     {
         isFocus = true;
@@ -47,6 +54,7 @@ public class Interactable : MonoBehaviour
 
     }
 
+    // Sets appropriate field when the object is no longer focused on.
     public void OnDefocused()
     {
         isFocus = false;

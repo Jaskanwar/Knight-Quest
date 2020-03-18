@@ -5,11 +5,12 @@ using UnityEngine.AI;
 
 public class CharacterAnimator : MonoBehaviour
 {
-    const float locomotionAnimatorSmoothTime = .1f;
-    Animator animator;
-    NavMeshAgent agent;
+    const float locomotionAnimatorSmoothTime = .1f; // transistion time between animations.
+    Animator animator; // animator reference.
+    NavMeshAgent agent; // nav mesh reference.
 
-    // Start is called before the first frame update
+    
+    // get references.
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
