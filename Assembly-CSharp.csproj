@@ -62,7 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_Scripts\CameraController.cs" />
     <Compile Include="Assets\_Scripts\CharacterAnimator.cs" />
     <Compile Include="Assets\_Scripts\CharacterCombat.cs" />
     <Compile Include="Assets\_Scripts\Controllers\ActivatorController.cs" />
@@ -83,9 +82,7 @@
     <Compile Include="Assets\_Scripts\Items\Item.cs" />
     <Compile Include="Assets\_Scripts\Items\ItemPickup.cs" />
     <Compile Include="Assets\_Scripts\PlayerAnimator.cs" />
-    <Compile Include="Assets\_Scripts\PlayerController.cs" />
     <Compile Include="Assets\_Scripts\PlayerManager.cs" />
-    <Compile Include="Assets\_Scripts\PlayerMotor.cs" />
     <Compile Include="Assets\_Scripts\Stats\CharacterStats.cs" />
     <Compile Include="Assets\_Scripts\Stats\ChararacterStats.cs" />
     <Compile Include="Assets\_Scripts\Stats\EnemyStats.cs" />
