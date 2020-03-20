@@ -5,9 +5,21 @@ using UnityEngine.AI;
 
 public class CharacterAnimator : MonoBehaviour
 {
+
+    public AnimationClip replaceableAttackAnim;
     const float locomotionAnimatorSmoothTime = .1f; // transistion time between animations.
-    Animator animator; // animator reference.
+    public Animator animator; // animator reference.
     NavMeshAgent agent; // nav mesh reference.
+
+    protected AnimatorOverrideController overrideController;
+
+    protected CharacterCombat combat;
+
+    protected AnimationClip[] currentAttackAnimSet;
+
+    public AnimationClip[] defaultAttackAnimSet;
+
+
 
     
     // get references.
@@ -15,6 +27,17 @@ public class CharacterAnimator : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+        combat = GetComponent<CharacterCombat>();
+
+        overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        animator.runtimeAnimatorController = overrideController;
+
+        currentAttackAnimSet = defaultAttackAnimSet;
+        combat.OnAttack += OnAttack;
+
+      
+
+      
     }
 
     // Update is called once per frame
@@ -22,6 +45,17 @@ public class CharacterAnimator : MonoBehaviour
     {
         float speedPercent = agent.velocity.magnitude / agent.speed;
         animator.SetFloat("speedPercent", speedPercent, locomotionAnimatorSmoothTime, Time.deltaTime);
+        animator.SetBool("inCombat", combat.InCombat);
 
+    }
+
+
+    protected virtual void OnAttack()
+    {
+        Debug.Log(EquipmentManager.instance.EquipSword);
+        animator.SetBool("attackSword", EquipmentManager.instance.EquipSword);
+        animator.SetTrigger("attack");
+        int attackIndex = Random.Range(0, currentAttackAnimSet.Length);
+       // overrideController[replaceableAttackAnim] = currentAttackAnimSet[attackIndex];
     }
 }
