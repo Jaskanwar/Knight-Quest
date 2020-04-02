@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
     Transform target; // refernce to the player
     NavMeshAgent agent; // reference to the Nav Mesh
     CharacterCombat combat; // refernce to the combat of the player
+    public static Animator animator;
+   
 
 
 
@@ -20,6 +22,10 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         target = PlayerManager.instance.player.transform;
         combat = GetComponent<CharacterCombat>();
+        animator = GetComponentInChildren<Animator>();
+       
+        
+      
 
         
     }
@@ -33,8 +39,10 @@ public class EnemyController : MonoBehaviour
         if(distance <=lookRadius)
         {
             agent.SetDestination(target.position);
+           
             if(distance <=agent.stoppingDistance)
             {
+                Debug.Log("attacking");
                 // Attack the target
                 CharacterStats targetStats = target.GetComponent<CharacterStats>();
                 if(targetStats!= null)
@@ -43,10 +51,14 @@ public class EnemyController : MonoBehaviour
                 }
 
                 FaceTarget();
+            
 
 
             }
         }
+
+        FaceTarget();
+
     }
 
     void FaceTarget()

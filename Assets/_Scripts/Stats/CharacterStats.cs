@@ -1,41 +1,44 @@
 ﻿
 using UnityEngine;
 
-public class ChararacterStats : MonoBehaviour
+public class CharacterStats : MonoBehaviour
 {
     public Stat damage;
-    public Stat armour;
+    public Stat armor;
+
 
     public int maxHealth = 100;
 
-    public int currentHealth { get; private set; } // this property is publicly accessible however the set function can only be done from within the class
+    public int CurrentHealth { get; set; } // this property is publicly accessible however the set function can only be done from within the class
+
 
     void Awake()
     {
-        currentHealth = maxHealth; // starting health for player.
+        CurrentHealth = maxHealth; // starting health for player.
+
     }
 
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(10);
-        }
-    }
 
-    public void TakeDamage(int damage)
+
+    public virtual void TakeDamage(int damage)
     {
-        damage -= armour.GetValue();
+
+        damage -= armor.GetValue();
+
         damage = Mathf.Clamp(damage, 0, int.MaxValue); // this insures that the damage value is not negative given an armour value greater than it
+        Debug.Log(damage);
+        CurrentHealth -= damage;
 
-        currentHealth -= damage;
+
         Debug.Log(transform.name + " takes " + damage + "  damage.");
 
-        if(currentHealth<=0)
+
+
+        if (CurrentHealth <= 0)
         {
             Die();
         }
-     
+
     }
 
     // overridabel method for different characters who will die in different ways.
