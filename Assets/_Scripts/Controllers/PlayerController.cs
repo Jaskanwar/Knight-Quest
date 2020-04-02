@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask movementMask; // the ground, filters out everything thats not walkable.
     public PlayerMotor motor;
     public Interactable focus; // this is the players current focus, Item, enemy, etc.
+    public Animator animator;
+   
   
 
     // retrieving our references.
@@ -17,8 +19,12 @@ public class PlayerController : MonoBehaviour
     {
         cam = Camera.main;
         motor = GetComponent<PlayerMotor>();
+        animator = GetComponentInChildren<Animator>();
+       
         
     }
+
+    public static GameObject acting { get; private set; }
 
     // Update is called once per frame
     void Update()
@@ -35,7 +41,7 @@ public class PlayerController : MonoBehaviour
             // Shoot a ray out to hit an object.
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
+          
             // if we hit an object.
             if (Physics.Raycast(ray, out hit, 100, movementMask))
             {
@@ -59,6 +65,7 @@ public class PlayerController : MonoBehaviour
             {
                 // Check if we hit an interactable, if we did do something.
                 Interactable interactable = hit.collider.GetComponent<Interactable>();
+                acting = hit.collider.gameObject; 
 
                 // if we hit an interactable focus on the object.
                 if(interactable!= null)
@@ -108,4 +115,21 @@ public class PlayerController : MonoBehaviour
         motor.StopFollowingTarget();
 
     }
+
+   
+    IEnumerator Die(Collider collide)
+    {
+        yield return new WaitForSeconds(1.0f);
+        if (collide.gameObject.CompareTag("Gate"))
+        {
+            Destroy(this.gameObject);
+        }
+
+
+    }
+        
+
+    
+
+  
 }

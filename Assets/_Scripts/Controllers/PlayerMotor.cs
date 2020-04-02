@@ -8,18 +8,28 @@ using UnityEngine.AI;
 public class PlayerMotor : MonoBehaviour
 {
     public Transform target;
+ 
 
     NavMeshAgent agent;
     // Start is called before the first frame update
+
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+       
+        
+
+
     }
+
+
 
     void Update()
     {
         if(target!= null)
         {
+            
             agent.SetDestination(target.position);
             FaceTarget();
         }
@@ -34,6 +44,7 @@ public class PlayerMotor : MonoBehaviour
         {
             this.transform.position = point;
         }
+        
         
             agent.SetDestination(point);
         
